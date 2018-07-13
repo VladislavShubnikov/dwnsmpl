@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{80881612-e8c3-4abb-9b80-37755717aef9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\universal">
+      <UniqueIdentifier>{50648e29-193b-40f2-a600-09e29f5ab391}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\win">
+      <UniqueIdentifier>{db0d1751-3306-47b2-93ab-64d0f5f61e0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\dwnsmpl">
+      <UniqueIdentifier>{ae934676-ffd9-4e94-9ac1-f5d97e98cd4c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\win\dwnsmp2d_main_win.cpp">
+      <Filter>src\win</Filter>
+    </ClCompile>
+    <ClCompile Include="src\universal\draw.cpp">
+      <Filter>src\universal</Filter>
+    </ClCompile>
+    <ClCompile Include="src\universal\dump.cpp">
+      <Filter>src\universal</Filter>
+    </ClCompile>
+    <ClCompile Include="src\universal\image.cpp">
+      <Filter>src\universal</Filter>
+    </ClCompile>
+    <ClCompile Include="src\universal\memtrack.cpp">
+      <Filter>src\universal</Filter>
+    </ClCompile>
+    <ClCompile Include="src\universal\mtypes.cpp">
+      <Filter>src\universal</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dwnsmpl\dsample2d.cpp">
+      <Filter>src\dwnsmpl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\universal\ktxtexture.cpp">
+      <Filter>src\universal</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\universal\draw.h">
+      <Filter>src\universal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\universal\dump.h">
+      <Filter>src\universal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\universal\image.h">
+      <Filter>src\universal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\universal\memtrack.h">
+      <Filter>src\universal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\universal\mtypes.h">
+      <Filter>src\universal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\dwnsmpl\dsample2d.h">
+      <Filter>src\dwnsmpl</Filter>
+    </ClInclude>
+    <ClInclude Include="src\universal\ktxtexture.h">
+      <Filter>src\universal</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

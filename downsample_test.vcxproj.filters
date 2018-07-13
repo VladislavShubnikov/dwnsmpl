@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{2296c89f-54f1-431b-9793-d4acf1422215}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\test_win">
+      <UniqueIdentifier>{4b40a60c-f4c1-417c-aa95-50798f456fbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\universal">
+      <UniqueIdentifier>{233fc9db-5858-4019-9caf-42dede603835}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\cspec">
+      <UniqueIdentifier>{a531cc1f-1d98-4754-b3e8-cebfbbceab4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\dwnsmpl">
+      <UniqueIdentifier>{6f73f23d-818a-4631-bb8e-9f56d5703f89}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\test\main_test.cpp">
+      <Filter>src\test_win</Filter>
+    </ClCompile>
+    <ClCompile Include="src\universal\draw.cpp">
+      <Filter>src\universal</Filter>
+    </ClCompile>
+    <ClCompile Include="src\universal\dump.cpp">
+      <Filter>src\universal</Filter>
+    </ClCompile>
+    <ClCompile Include="src\universal\image.cpp">
+      <Filter>src\universal</Filter>
+    </ClCompile>
+    <ClCompile Include="src\universal\memtrack.cpp">
+      <Filter>src\universal</Filter>
+    </ClCompile>
+    <ClCompile Include="src\universal\mtypes.cpp">
+      <Filter>src\universal</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dwnsmpl\dsample2d.cpp">
+      <Filter>src\dwnsmpl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cspec\array.c">
+      <Filter>src\cspec</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cspec\cspec_config.c">
+      <Filter>src\cspec</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cspec\cspec_output.c">
+      <Filter>src\cspec</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cspec\cspec_output_header.c">
+      <Filter>src\cspec</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cspec\cspec_output_junit_xml.c">
+      <Filter>src\cspec</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cspec\cspec_output_unit.c">
+      <Filter>src\cspec</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cspec\cspec_output_verbose.c">
+      <Filter>src\cspec</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cspec\cspec_output_xml.c">
+      <Filter>src\cspec</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cspec\cspec_private.c">
+      <Filter>src\cspec</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cspec\cspec_runner.c">
+      <Filter>src\cspec</Filter>
+    </ClCompile>
+    <ClCompile Include="src\test\imgload.cpp">
+      <Filter>src\test_win</Filter>
+    </ClCompile>
+    <ClCompile Include="src\universal\ktxtexture.cpp">
+      <Filter>src\universal</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\universal\draw.h">
+      <Filter>src\universal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\universal\dump.h">
+      <Filter>src\universal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\universal\image.h">
+      <Filter>src\universal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\universal\memtrack.h">
+      <Filter>src\universal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\universal\mtypes.h">
+      <Filter>src\universal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\dwnsmpl\dsample2d.h">
+      <Filter>src\dwnsmpl</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cspec\array.h">
+      <Filter>src\cspec</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cspec\cspec.h">
+      <Filter>src\cspec</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cspec\cspec_config.h">
+      <Filter>src\cspec</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cspec\cspec_output.h">
+      <Filter>src\cspec</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cspec\cspec_output_header.h">
+      <Filter>src\cspec</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cspec\cspec_output_junit_xml.h">
+      <Filter>src\cspec</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cspec\cspec_output_unit.h">
+      <Filter>src\cspec</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cspec\cspec_output_verbose.h">
+      <Filter>src\cspec</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cspec\cspec_output_xml.h">
+      <Filter>src\cspec</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cspec\cspec_private.h">
+      <Filter>src\cspec</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cspec\cspec_private_output_junit_xml.h">
+      <Filter>src\cspec</Filter>
+    </ClInclude>
+    <ClInclude Include="src\test\imgload.h">
+      <Filter>src\test_win</Filter>
+    </ClInclude>
+    <ClInclude Include="src\universal\ktxtexture.h">
+      <Filter>src\universal</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

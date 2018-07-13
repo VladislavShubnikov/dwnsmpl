@@ -1,0 +1,1 @@
+downsample2d_rel.exe data/lungs_001.jpg

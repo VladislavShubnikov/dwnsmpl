@@ -1,0 +1,1 @@
+cppcheck.exe --enable=all ./src/universal ./src/win ./src/dwnsmpl ./src/test > err_cppcheck.txt
