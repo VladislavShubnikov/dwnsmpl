@@ -29,6 +29,8 @@ set(universal_source_files
   memtrack.h
   mtypes.cpp
   mtypes.h
+  volume.cpp
+  volume.h
 )
 
 set(win_source_files
