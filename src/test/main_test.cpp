@@ -55,6 +55,26 @@ const int X_WHITE = 86;
 const int Y_WHITE = 314;
 
 // ******************************************************************
+// Memory leak trace callback
+// ******************************************************************
+
+static int _memTrackCallbackPrint(
+                                  const void   *pMem,
+                                  const int     memSize,
+                                  const char   *fileNameSrc,
+                                  const int     fileLineNumber
+                                )
+{
+  static char     strIn[256];
+
+  USE_PARAM(pMem);
+  sprintf(strIn, "Memory leak size = %d bytes, %s, line %d\n", memSize, fileNameSrc, fileLineNumber);
+  printf(strIn);
+  return 1;
+}
+
+
+// ******************************************************************
 // Test descriptions
 // ******************************************************************
 
@@ -178,7 +198,7 @@ DESCRIBE(testLoadImage, "void testLoadImage()")
       valDif = fabsf(valSlow - valFast);
       SHOULD_BE_TRUE(valDif < MIN_PIXEL_DIF);
     }
-
+    delete[] pixelsSrcImage;
   }
   END_IT
 END_DESCRIBE
@@ -409,10 +429,7 @@ int  main(int argc, char *argv)
   if (memAllocatedSize > 0)
   {
     printf("Allocation leak found with %d bytes!!!", memAllocatedSize);
-    // static char strErr[120];
-    // sprintf(strErr, "XXXXXXXXXXXXXXXXXXXXXXXXXXX Memory Leak ! %d bytes XXXXXXXXXXXXXXXXXXXXXXXXXXX", memAllocatedSize);
-    // _logString(strErr);
-    // MemTrackForAll(_memTrackCallbackPrint);
+    MemTrackForAll(_memTrackCallbackPrint);
   }
   return res;
 }
