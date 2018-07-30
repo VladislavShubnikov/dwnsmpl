@@ -10,6 +10,8 @@ KWStyle.exe -xml kws.xml -html .kws_report src/universal/mtypes.h
 KWStyle.exe -xml kws.xml -html .kws_report src/universal/mtypes.cpp
 KWStyle.exe -xml kws.xml -html .kws_report src/universal/ktxtexture.h
 KWStyle.exe -xml kws.xml -html .kws_report src/universal/ktxtexture.cpp
+KWStyle.exe -xml kws.xml -html .kws_report src/universal/volume.h
+KWStyle.exe -xml kws.xml -html .kws_report src/universal/volume.cpp
 
 KWStyle.exe -xml kws.xml -html .kws_report src/dwnsmpl/dsample2d.h
 KWStyle.exe -xml kws.xml -html .kws_report src/dwnsmpl/dsample2d.cpp

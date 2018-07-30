@@ -31,6 +31,8 @@
 #include "dsample2d.h"
 #include "image.h"
 #include "ktxtexture.h"
+#include "volume.h"
+#include "dump.h"
 #include "memtrack.h"
 
 #include "imgload.h"
@@ -206,6 +208,177 @@ DESCRIBE(testLoadVolume, "void testLoadVolume()")
     delete volTexture;
   }
   END_IT
+
+  IT("load volume and Gauss smooth")
+  {
+    const char *KTX_TEXTURE_FILE_NAME = "data/lungs_000.ktx";
+
+    FILE *file;
+    file = fopen(KTX_TEXTURE_FILE_NAME, "rb");
+    SHOULD_BE_TRUE(file != NULL);
+
+    KtxTexture *volTexture = M_NEW(KtxTexture);
+    KtxError errLoad = volTexture->loadFromFileContent(file);
+    fclose(file);
+    SHOULD_BE_TRUE(errLoad == KTX_ERROR_OK);
+
+    int x, y, z;
+
+#if defined(NEED_SAVE_SLICE_SOURCE_LARGE)
+    // Save slice to file
+    MUint32 *pix32;
+    int off;
+    const int xDimSrc = volTexture->getWidth();
+    const int yDimSrc = volTexture->getHeight();
+    const int zDimSrc = volTexture->getDepth();
+    const MUint8 *volSrcLarge = volTexture->getData();
+
+    pix32 = M_NEW(MUint32[xDimSrc * yDimSrc]);
+    z = zDimSrc >> 1;
+    off = 0;
+    for (y = 0; y < yDimSrc; y++)
+    {
+      for (x = 0; x < xDimSrc; x++)
+      {
+        const MUint32 val = (MUint32)volSrcLarge[x + (y * xDimSrc) + z * (xDimSrc * yDimSrc)];
+        pix32[off++] = val;
+      }   // for (x)
+    }     // for (y)
+    const char *DUMP_BMP_NAME_SRC = "dump/vol_slice_src.bmp";
+    Dump::saveImageGreyToBitmapFile(pix32, xDimSrc, yDimSrc, DUMP_BMP_NAME_SRC);
+    delete [] pix32;
+    pix32 = NULL;
+#endif
+
+    // scale down volume
+    const int X_DIM_TEST = 128;
+    const int Y_DIM_TEST = 128;
+    const int Z_DIM_TEST =  64;
+    volTexture->rescale(X_DIM_TEST, Y_DIM_TEST, Z_DIM_TEST);
+
+    const MUint8 *volSrc;
+
+#if defined(NEED_SAVE_SLICE_SCALED)
+    // Save rescaled slice to file
+    volSrc = volTexture->getData();
+    pix32 = M_NEW(MUint32[X_DIM_TEST * Y_DIM_TEST]);
+    z = Z_DIM_TEST >> 1;
+    off = 0;
+    for (y = 0; y < Y_DIM_TEST; y++)
+    {
+      for (x = 0; x < X_DIM_TEST; x++)
+      {
+        const MUint32 val = (MUint32)volSrc[x + (y * X_DIM_TEST) + z * (X_DIM_TEST * Y_DIM_TEST)];
+        pix32[off++] = val;
+      }   // for (x)
+    }     // for (y)
+    const char *DUMP_BMP_NAME_SCALED = "dump/vol_slice_scaled.bmp";
+    Dump::saveImageGreyToBitmapFile(pix32, X_DIM_TEST, Y_DIM_TEST, DUMP_BMP_NAME_SCALED);
+    delete[] pix32;
+    pix32 = NULL;
+#endif
+
+    const int xDim = volTexture->getWidth();
+    const int yDim = volTexture->getHeight();
+    const int zDim = volTexture->getDepth();
+    volSrc = volTexture->getData();
+
+    KtxTexture *volSmoothSlow = M_NEW(KtxTexture);
+    const int BPP1 = 1;
+    volSmoothSlow->create3D(xDim, yDim, zDim, BPP1);
+    MUint8 *volDstSlow = volSmoothSlow->getData();
+
+    KtxTexture *volSmoothFast = M_NEW(KtxTexture);
+    volSmoothFast->create3D(xDim, yDim, zDim, BPP1);
+    MUint8 *volDstFast = volSmoothFast->getData();
+
+    const int NUM_ITERATIONS = 1;
+    clock_t timeStart, timeEnd;
+
+    printf("   Perform Gauss slow...\n");
+    timeStart = clock();
+    for (int iter = 0; iter < NUM_ITERATIONS; iter++)
+    {
+      VolumeTools::performGaussSlow(volSrc, xDim, yDim, zDim, volDstSlow);
+    }
+    timeEnd = clock();
+    const float timeDeltaGaussSlow = (float)(timeEnd - timeStart) / NUM_ITERATIONS;
+
+    printf("   Perform Gauss fast...\n");
+    timeStart = clock();
+    for (int iter = 0; iter < NUM_ITERATIONS; iter++)
+    {
+      VolumeTools::performGaussFast(volSrc, xDim, yDim, zDim, volDstFast);
+    }
+    timeEnd = clock();
+    const float timeDeltaGaussFast = (float)(timeEnd - timeStart) / NUM_ITERATIONS;
+
+    const float accelerationTime = timeDeltaGaussSlow / timeDeltaGaussFast;
+
+    const float SLOW_PER_FAST_TIMES = 5.0f;
+    SHOULD_BE_TRUE(accelerationTime > SLOW_PER_FAST_TIMES);
+
+    // check same results for fast and slow
+    const V2d pointsToCheck[] =
+    {
+      V2d(10, 8),  // black
+      V2d(57, 24), // edge
+      V2d(105, 38), // edge
+      V2d(24, 46), // bright
+      V2d(18, 69), // bright
+      V2d(49, 65), // grey
+      V2d(69, 54), // grey
+    };
+    const int NUM_CHECKS = sizeof(pointsToCheck) / sizeof(pointsToCheck[0]);
+
+    for (int iter = 0; iter < NUM_CHECKS; iter++)
+    {
+      x = pointsToCheck[iter].x;
+      y = pointsToCheck[iter].y;
+      z = zDim >> 1;
+      const MUint8 valSlow = volDstSlow[x + (y * xDim) + (z * xDim * yDim)];
+      const MUint8 valFast = volDstFast[x + (y * xDim) + (z * xDim * yDim)];
+      SHOULD_BE_TRUE(valSlow == valFast);
+    } // for (iter)
+
+    const int NUM_RAND_CHECKS = 8;
+    for (int iter = 0; iter < NUM_RAND_CHECKS; iter++)
+    {
+      const float tx = 0.3f + 0.4f * (float)rand() / RAND_MAX;
+      const float ty = 0.3f + 0.4f * (float)rand() / RAND_MAX;
+
+      x = (int)(xDim * tx);
+      y = (int)(yDim * ty);
+      z = zDim  >> 1;
+      const MUint8 valSlow = volDstSlow[x + (y * xDim) + (z * xDim * yDim)];
+      const MUint8 valFast = volDstFast[x + (y * xDim) + (z * xDim * yDim)];
+      SHOULD_BE_TRUE(valSlow == valFast);
+    } // for (iter)
+
+#if defined(NEED_SAVE_SLICE_FILTERED)
+    // Save to file
+    pix32 = M_NEW(MUint32[xDim * yDim]);
+    z = zDim >> 1;
+    off = 0;
+    for (y = 0; y < yDim; y++)
+    {
+      for (x = 0; x < xDim; x++)
+      {
+        const MUint32 val = (MUint32)volDstSlow[x + (y * xDim) + z * (xDim * yDim)];
+        pix32[off++] = val;
+      }   // for (x)
+    }     // for (y)
+    const char *DUMP_BMP_NAME_FILTERED = "dump/vol_slice_filtered.bmp";
+    Dump::saveImageGreyToBitmapFile(pix32, xDim, yDim, DUMP_BMP_NAME_FILTERED);
+    delete [] pix32;
+#endif
+
+    delete volSmoothFast;
+    delete volSmoothSlow;
+    delete volTexture;
+  }
+  END_IT
+
 END_DESCRIBE
 
 

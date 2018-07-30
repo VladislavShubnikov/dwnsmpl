@@ -75,6 +75,9 @@
     <ClCompile Include="src\universal\ktxtexture.cpp">
       <Filter>src\universal</Filter>
     </ClCompile>
+    <ClCompile Include="src\universal\volume.cpp">
+      <Filter>src\universal</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\universal\draw.h">
@@ -132,6 +135,9 @@
       <Filter>src\test_win</Filter>
     </ClInclude>
     <ClInclude Include="src\universal\ktxtexture.h">
+      <Filter>src\universal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\universal\volume.h">
       <Filter>src\universal</Filter>
     </ClInclude>
   </ItemGroup>
