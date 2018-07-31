@@ -402,7 +402,7 @@ KtxError KtxTexture::saveToFileContent(FILE *file)
     memcpy(dst, vBoxMax, sizeof(V3f));
     dst += sizeof(V3f);
 
-    m_header.m_bytesOfKeyValueData = dst - strKeyBuf;
+    m_header.m_bytesOfKeyValueData = (MUint32)(dst - strKeyBuf);
     assert(m_header.m_bytesOfKeyValueData <= sizeof(strKeyBuf));
   }
 
@@ -431,7 +431,7 @@ KtxError KtxTexture::saveToFileContent(FILE *file)
     memcpy(dst, vBoxSize, sizeof(V3d));
     dst += sizeof(V3d);
 
-    m_header.m_bytesOfKeyValueData = dst - strKeyBuf;
+    m_header.m_bytesOfKeyValueData = (MUint32)(dst - strKeyBuf);
     assert(m_header.m_bytesOfKeyValueData <= sizeof(strKeyBuf));
   }
 
@@ -446,7 +446,7 @@ KtxError KtxTexture::saveToFileContent(FILE *file)
     sizeVolume *= m_header.m_pixelDepth;
 
   // write header to dest buffer
-  numBytesWritten = fwrite(&m_header, 1, sizeof(m_header), file );
+  numBytesWritten = (int)fwrite(&m_header, 1, sizeof(m_header), file );
   if (numBytesWritten != sizeof(m_header))
     return KTX_ERROR_WRITE;
 
@@ -456,21 +456,21 @@ KtxError KtxTexture::saveToFileContent(FILE *file)
         m_header.m_bytesOfKeyValueData
      )
   {
-    numBytesWritten = fwrite(strKeyBuf, 1, m_header.m_bytesOfKeyValueData, file);
+    numBytesWritten = (int)fwrite(strKeyBuf, 1, m_header.m_bytesOfKeyValueData, file);
 
     if (numBytesWritten != (int)m_header.m_bytesOfKeyValueData)
       return KTX_ERROR_WRITE;
   }   // if exists key data
 
   // write volume size to dest buffer
-  numBytesWritten = fwrite(&sizeVolume, 1, sizeof(sizeVolume), file);
+  numBytesWritten = (int)fwrite(&sizeVolume, 1, sizeof(sizeVolume), file);
   if (numBytesWritten != sizeof(sizeVolume))
     return KTX_ERROR_WRITE;
 
 
   // write image bits
   assert(m_data != NULL);
-  numBytesWritten = fwrite(m_data, 1, sizeVolume, file);
+  numBytesWritten = (int)fwrite(m_data, 1, sizeVolume, file);
   if (numBytesWritten != sizeVolume)
     return KTX_ERROR_WRITE;
 
@@ -482,7 +482,7 @@ KtxError KtxTexture::loadFromFileContent(FILE *file)
   int numReadedBytes, xDim, yDim, zDim, bytesPerVoxel;
 
   // numReadedBytes = (int)file.read( (char*)&m_header, sizeof(m_header)  );
-  numReadedBytes = fread(&m_header, 1, sizeof(m_header), file);
+  numReadedBytes = (int)fread(&m_header, 1, sizeof(m_header), file);
   if (numReadedBytes != sizeof(m_header))
     return KTX_ERROR_WRONG_SIZE;
 
@@ -535,7 +535,7 @@ KtxError KtxTexture::loadFromFileContent(FILE *file)
     userData = M_NEW(char[m_header.m_bytesOfKeyValueData + 8] );
     if (!userData)
       return KTX_ERROR_NO_MEMORY;
-    numReadedBytes = fread(userData, 1, m_header.m_bytesOfKeyValueData, file);
+    numReadedBytes = (int)fread(userData, 1, m_header.m_bytesOfKeyValueData, file);
     if (numReadedBytes != (int)m_header.m_bytesOfKeyValueData)
     {
       delete [] userData;
@@ -613,7 +613,7 @@ KtxError KtxTexture::loadFromFileContent(FILE *file)
 
   // read size
   //numReadedBytes = (int)file.read( (char*)&m_dataSize, sizeof(m_dataSize) );
-  numReadedBytes = fread(&m_dataSize, 1, sizeof(m_dataSize), file);
+  numReadedBytes = (int)fread(&m_dataSize, 1, sizeof(m_dataSize), file);
   if (numReadedBytes != sizeof(m_dataSize))
     return KTX_ERROR_WRONG_FORMAT;
   if (m_dataSize > 1024 * 1024 * 512)
@@ -626,7 +626,7 @@ KtxError KtxTexture::loadFromFileContent(FILE *file)
   if (m_data == NULL)
     return KTX_ERROR_NO_MEMORY;
   //numReadedBytes = (int)file.read( (char*)m_data, m_dataSize);
-  numReadedBytes = fread(m_data, 1, m_dataSize, file);
+  numReadedBytes = (int)fread(m_data, 1, m_dataSize, file);
   if (numReadedBytes != m_dataSize)
     return KTX_ERROR_WRONG_SIZE;
 

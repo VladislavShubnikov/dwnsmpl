@@ -151,7 +151,7 @@ DESCRIBE(testLoadImage, "void testLoadImage()")
     const MUint32 TIME_GAUSS_SLOW_MAX = 500;
     SHOULD_BE_TRUE(timeDeltaGaussSlow < TIME_GAUSS_SLOW_MAX);
 
-    const float SLOW_PER_FAST_TIMES = 5.0f;
+    const float SLOW_PER_FAST_TIMES = 4.0f;
     SHOULD_BE_TRUE(accelerationTime > SLOW_PER_FAST_TIMES);
 
     // compate interesting pixels
@@ -335,7 +335,7 @@ DESCRIBE(testLoadVolume, "void testLoadVolume()")
 
     const float accelerationTime = timeDeltaGaussSlow / timeDeltaGaussFast;
 
-    const float SLOW_PER_FAST_TIMES = 5.0f;
+    const float SLOW_PER_FAST_TIMES = 4.0f;
     SHOULD_BE_TRUE(accelerationTime > SLOW_PER_FAST_TIMES);
 
     // check same results for fast and slow

@@ -972,5 +972,5 @@ int PASCAL  WinMain(
     _logString(strErr);
     MemTrackForAll(_memTrackCallbackPrint);
   }
-  return msg.wParam;
+  return (int)msg.wParam;
 }

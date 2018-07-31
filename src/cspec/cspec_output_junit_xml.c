@@ -98,7 +98,7 @@ int sumup_failure(const descrOutputs_t* const descr)
     int sum = 0;
 
     for (j = 0; j < descr->n_itOutputs; ++j) {
-        sum += descr->itOutputs[j].failures->size;
+        sum += (int)descr->itOutputs[j].failures->size;
     }
     return sum;
 }

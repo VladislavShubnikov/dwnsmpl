@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+
+# Temp C files
+.x64/
+.Debug/
+.Release/
+.out/
