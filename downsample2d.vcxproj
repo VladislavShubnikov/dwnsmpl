@@ -177,6 +177,7 @@
     <ClCompile Include="src\universal\ktxtexture.cpp" />
     <ClCompile Include="src\universal\memtrack.cpp" />
     <ClCompile Include="src\universal\mtypes.cpp" />
+    <ClCompile Include="src\universal\volume.cpp" />
     <ClCompile Include="src\win\dwnsmp2d_main_win.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -187,6 +188,7 @@
     <ClInclude Include="src\universal\ktxtexture.h" />
     <ClInclude Include="src\universal\memtrack.h" />
     <ClInclude Include="src\universal\mtypes.h" />
+    <ClInclude Include="src\universal\volume.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

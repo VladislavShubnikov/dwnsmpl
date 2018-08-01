@@ -43,10 +43,6 @@ int  VolumeTools::performGaussSlow(
         float sum = 0.0f;
         float sumWeights = 0.0f;
 
-        // !!!!!! TEST !!!!!!!!!
-        if ( (cx == 72) && (cy == 53) && (cz == 32) )
-          sum = 0.0f;
-
         for (dz = -VOL_GAUSS_RADIUS; dz <= +VOL_GAUSS_RADIUS; dz++)
         {
           const int z = cz + dz;
@@ -104,7 +100,7 @@ int  VolumeTools::performGaussFast(
 {
   // TODO: this function should be improved in terms of performance
   // 1) Gauss koefficients should be calculated before main volume cycle
-  // 2) Constants should be calculated out of internal cycles
+  // 2) Constants should be calculated out of internal cycles (remove cycle invariants)
 
   const int   VOL_GAUSS_RADIUS  = 1;
   const float VOL_GAUSS_SIGMA   = 0.8f;
@@ -118,11 +114,10 @@ int  VolumeTools::performGaussFast(
     {
       for (cx = 0; cx < xDim; cx++)
       {
-
         int dx, dy, dz;
 
-        float sum = 0.0f;
-        float sumWeights = 0.0f;
+        float sum         = 0.0f;
+        float sumWeights  = 0.0f;
 
         for (dz = -VOL_GAUSS_RADIUS; dz <= +VOL_GAUSS_RADIUS; dz++)
         {
